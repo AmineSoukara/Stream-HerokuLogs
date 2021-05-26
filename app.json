@@ -1,0 +1,26 @@
+{
+  "name": "Stream Heroku-Logs",
+  "description": "A user bot for stat telegram bots online status",
+  "repository": "https://github.com/AmineSoukara/Stream-HerokuLogs",
+  "keywords": ["telegram", "heroku", "bot", "Logs"],
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Your BOT_TOKEN  from @BotFather"
+    },
+    "API_ID": {
+      "description": "Your APP_ID from https://my.telegram.org/apps "
+    },
+    "API_HASH": {
+      "description": "Your API_HASH from https://my.telegram.org/apps"
+    },
+    "ID": {
+      "description": "Specific chat (Your ID or Channel ID"
+    },
+    "HEROKU_APP_NAME": {
+      "description": "Your Heroku Acc #APP-NAME"
+    },
+    "HEROKU_API_KEY": {
+      "description": "Your Heroku Acc #API-KEY"
+    }
+  }
+}
