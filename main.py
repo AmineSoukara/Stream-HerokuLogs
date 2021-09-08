@@ -7,6 +7,7 @@ import re
 import heroku3
 import urllib3
 from pyrogram import Client
+from pyrogram.errors import FloodWait
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -35,6 +36,9 @@ def main():
                 t = "💬 [INFO] Starting To Stream Logs.."
                 print(t)
                 Alty.send_message(ID, t)
+
+            except FloodWait as f_e:
+                time.sleep(f_e.x)
             except Exception as e:
                 print(e)
 
@@ -43,12 +47,14 @@ def main():
             for line in app.stream_log(lines=1):
                 try:
                     txt = line.decode("utf-8")
-                    done = "➕ " + txt
-                    Alty.send_message(ID, done)
+                    Alty.send_chat_action(ID, "typing")
+                    Alty.send_message(ID, f"➕ {txt}")
+                except FloodWait as f_e:
+                    time.sleep(f_e.x)
                 except Exception as e:
                     print(e)
 
-#            time.sleep(TIME * 60)
+            time.sleep(2)
 
 
 main()
