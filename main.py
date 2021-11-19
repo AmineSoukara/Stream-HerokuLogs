@@ -23,6 +23,9 @@ API_HASH = os.environ.get("API_HASH")
 # Your ID, Or Channel/Group ID :
 ID = int(os.environ.get("ID", 12345))
 
+# How Mush Lines Do U Want In One Message? :
+LINES = int(os.environ.get("LINES", 1))
+
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
 
@@ -38,20 +41,20 @@ def main():
                 print(t)
                 Alty.send_message(ID, t)
 
-            except FloodWait as f_e:
-                time.sleep(f_e.x)
+            except FloodWait as sec:
+                time.sleep(sec.x)
             except Exception as e:
                 print(e)
 
             server = heroku3.from_key(HEROKU_API_KEY)
             app = server.app(HEROKU_APP_NAME)
-            for line in app.stream_log(lines=1):
+            for line in app.stream_log(lines=LINES):
                 try:
                     txt = line.decode("utf-8")
                     Alty.send_chat_action(ID, "typing")
                     Alty.send_message(ID, f"➕ {txt}")
-                except FloodWait as f_e:
-                    time.sleep(f_e.x)
+                except FloodWait as sec:
+                    time.sleep(sec.x)
                 except Exception as e:
                     print(e)
 
