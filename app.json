@@ -16,6 +16,9 @@
     "ID": {
       "description": "Specific chat (Your ID or Channel ID"
     },
+    "LINES": {
+      "description": "How Mush Lines Do U Want In One Message?"
+    },
     "HEROKU_APP_NAME": {
       "description": "Your Heroku Acc #APP-NAME"
     },
