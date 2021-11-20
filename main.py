@@ -51,7 +51,7 @@ def main():
             for line in app.stream_log(lines=LINES):
                 try:
                     txt = line.decode("utf-8")
-                    Alty.send_chat_action(ID, "typing")
+                    # Alty.send_chat_action(ID, "typing")
                     Alty.send_message(ID, f"➕ {txt}")
                 except FloodWait as sec:
                     time.sleep(sec.x)
