@@ -4,7 +4,7 @@
 
 ## 👨‍💻 Deploy:
 ### -Easy Way
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AmineSoukara/Stream-HerokuLogs/tree/beta)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AmineSoukara/Stream-HerokuLogs/tree/main)
 
 ### -Normal Way
 ```python3
@@ -30,6 +30,7 @@ Go to https://dashboard.heroku.com/account, scroll down and press Reveal API
 ## Commands: 
 * `/dyno_off` Trun Off Dyno 
 * `/dyno_on` Trun On Dyno 
+* `/dyno_restart` Restart Dyno 
 ---
 ## Note:
 Don't Run it In Your Main Account, Use Another Account, Bcz Dynos Will Gooo Brrrrrr
