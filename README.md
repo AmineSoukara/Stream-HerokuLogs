@@ -4,7 +4,7 @@
 
 ## 👨‍💻 Deploy:
 ### -Easy Way
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AmineSoukara/Stream-HerokuLogs/tree/main)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AmineSoukara/Stream-HerokuLogs/tree/beta)
 
 ### -Normal Way
 ```python3
@@ -19,10 +19,17 @@ python3 main.py
 * `API_ID` Your API ID from my.telegram.org
 * `BOT_TOKEN` Your bot token from @BotFather
 * `ID` Your ID Or Channel ID
+* `OWNER_ID` Owner Id
+
 ###
 Go to https://dashboard.heroku.com/account, scroll down and press Reveal API
-* `HEROKU_APP_NAME` Your Heroku APP-NAME
-* `HEROKU_API_KEY` Your Heroku API-KEY
+* `HEROKU_APP_NAME` Heroku APP-NAME
+* `HEROKU_API_KEY` Heroku API-KEY
+* `PROCESS_TYPE` App PROCESS-TYPE
+
+## Commands: 
+* `/dyno_off` Trun Off Dyno 
+* `/dyno_on` Trun On Dyno 
 ---
 ## Note:
 Don't Run it In Your Main Account, Use Another Account, Bcz Dynos Will Gooo Brrrrrr
@@ -37,4 +44,4 @@ Don't Run it In Your Main Account, Use Another Account, Bcz Dynos Will Gooo Brrr
 * Damien-Soukara : [Github@Damien](https://github.com/AmineSoukara)
 ## 
 <a href="https://t.me/DamienSoukara"><img src="https://img.shields.io/badge/Join-Telegram%20Channel-red.svg?logo=Telegram"></a>
-<a href="https://t.me/DamienHelp"><img src="https://img.shields.io/badge/Join-Telegram%20Group-blue.svg?logo=telegram"></a>
+<a href="https://t.me/DamienSupport"><img src="https://img.shields.io/badge/Join-Telegram%20Group-blue.svg?logo=telegram"></a>
