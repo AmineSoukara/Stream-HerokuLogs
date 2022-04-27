@@ -29,6 +29,7 @@ OWNER_ID = int(os.environ.get("OWNER_ID", 12345))
 
 # How Mush Lines Do U Want In One Message? :
 LINES = int(os.environ.get("LINES", 1))
+TIMEOUT = int(os.environ.get("TIMEOUT", 100))
 
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
@@ -46,17 +47,26 @@ async def main():
             await Alty.send_message(OWNER_ID, t)
 
             while True:
+
                 server = heroku3.from_key(HEROKU_API_KEY)
-                app = server.app(HEROKU_APP_NAME)
-                for line in app.stream_log(lines=LINES):
-                    await asyncio.sleep(2)
-                    try:
-                        txt = line.decode("utf-8")
-                        await Alty.send_message(ID, f"➕ {txt}")
-                    except FloodWait as sec:
-                        await asyncio.sleep(sec.value)
-                    except Exception as e:
-                        print(e)
+                # app = server.app(HEROKU_APP_NAME)
+                log = server.stream_app_log(HEROKU_APP_NAME, lines=LINES, timeout=TIMEOUT)
+                msg = "#LOGS:\n"
+                for line in log:
+                    txt = "\n➕ " + line.decode("utf-8")
+                    msg += txt
+
+                try:
+                    if len(msg) > 4096:
+                        with open("logs.txt", "w") as f:
+                            f.write(msg)
+                        await Alty.send_document(ID, "logs.txt")
+                        os.remove("logs.txt")
+                    await Alty.send_message(ID, msg)
+                except FloodWait as sec:
+                    await asyncio.sleep(sec.value)
+                except Exception as e:
+                    print(e)
 
             await asyncio.sleep(3)
 
