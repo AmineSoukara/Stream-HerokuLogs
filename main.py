@@ -82,12 +82,25 @@ def heroku_scale(scale: int):
 @Alty.on_message(
     filters.private & filters.command(["dyno_on", "dyno_off"]) & filters.user(OWNER_ID)
 )
-async def off_on(_, message: Message):
+async def dyno_off_on(_, message: Message):
     cmd = message.command[0]
     msg = await message.reply("• Please Wait!")
     scale = 0 if cmd == "dyno_off" else 1
     check = heroku_scale(scale)
     await msg.edit(check)
 
+@Alty.on_message(
+    filters.private & filters.command("dyno_restart") & filters.user(OWNER_ID)
+)
+async def dyno_restart(_, message: Message):
+    msg = await message.reply("• Please Wait!")
+    try:
+        heroku_x = heroku3.from_key(HEROKU_API_KEY)
+        ok = heroku_x.apps()[HEROKU_APP_NAME]
+        ok.restart()
+        await msg.edit(f"✅️ App: {HEROKU_APP_NAME} Restarted !")
+    except BaseException:
+       err = "⚠️ Error: " + str(traceback.format_exc())
+       await msg.edit(err)
 
 Alty.run(main())
