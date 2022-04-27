@@ -50,7 +50,9 @@ async def main():
 
                 server = heroku3.from_key(HEROKU_API_KEY)
                 # app = server.app(HEROKU_APP_NAME)
-                log = server.stream_app_log(HEROKU_APP_NAME, lines=LINES, timeout=TIMEOUT)
+                log = server.stream_app_log(
+                    HEROKU_APP_NAME, lines=LINES, timeout=TIMEOUT
+                )
                 msg = "#LOGS:\n"
                 for line in log:
                     txt = "\n➕ " + line.decode("utf-8")
@@ -99,6 +101,7 @@ async def dyno_off_on(_, message: Message):
     check = heroku_scale(scale)
     await msg.edit(check)
 
+
 @Alty.on_message(
     filters.private & filters.command("dyno_restart") & filters.user(OWNER_ID)
 )
@@ -110,7 +113,8 @@ async def dyno_restart(_, message: Message):
         ok.restart()
         await msg.edit(f"✅️ App: {HEROKU_APP_NAME} Restarted !")
     except BaseException:
-       err = "⚠️ Error: " + str(traceback.format_exc())
-       await msg.edit(err)
+        err = "⚠️ Error: " + str(traceback.format_exc())
+        await msg.edit(err)
+
 
 Alty.run(main())
