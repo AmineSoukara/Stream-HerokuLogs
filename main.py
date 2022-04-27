@@ -4,6 +4,7 @@
 import asyncio
 import os
 import traceback
+from os.path import isfile
 
 import heroku3
 import urllib3
@@ -49,26 +50,36 @@ async def main():
             while True:
 
                 server = heroku3.from_key(HEROKU_API_KEY)
-                # app = server.app(HEROKU_APP_NAME)
-                log = server.stream_app_log(
-                    HEROKU_APP_NAME, lines=LINES, timeout=TIMEOUT
-                )
-                msg = "#LOGS:\n"
-                for line in log:
-                    txt = "\n➕ " + line.decode("utf-8")
-                    msg += txt
+                app = server.app(HEROKU_APP_NAME)
 
-                try:
-                    if len(msg) > 4096:
-                        with open("logs.txt", "w") as f:
-                            f.write(msg)
-                        await Alty.send_document(ID, "logs.txt")
-                        os.remove("logs.txt")
-                    await Alty.send_message(ID, msg)
-                except FloodWait as sec:
-                    await asyncio.sleep(sec.value)
-                except Exception as e:
-                    print(e)
+                lines = []
+                for line in app.stream_log(lines=1):
+                    txt = line.decode("utf-8")
+                    lines.append(txt)
+
+                    if len(lines) >= LINES:
+                        print(f"✅️ Lines Reached: {len(lines)}")
+                        done = "\n".join(l for l in lines)
+
+                        try:
+
+                            if len(done) > 4096:
+                                path = f"logs_{HEROKU_APP_NAME}.txt"
+                                with open(path, "w") as f:
+                                    f.write(done)
+                                await Alty.send_document(ID, path)
+
+                                if isfile(path):
+                                    os.remove(path)
+
+                            await Alty.send_message(ID, done)
+
+                        except FloodWait as sec:
+                            await asyncio.sleep(sec.value)
+                        except Exception as e:
+                            print(e)
+                        finally:
+                            lines.clear()
 
             await asyncio.sleep(3)
 
