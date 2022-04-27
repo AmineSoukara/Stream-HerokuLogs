@@ -37,7 +37,7 @@ PROCESS_TYPE = os.environ.get("PROCESS_TYPE", "worker")
 Alty = Client("Alty-Logs", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
 
-def main():
+async def main():
     async with Alty:
         try:
             while True:
