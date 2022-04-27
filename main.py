@@ -49,7 +49,7 @@ async def main():
                 server = heroku3.from_key(HEROKU_API_KEY)
                 app = server.app(HEROKU_APP_NAME)
                 for line in app.stream_log(lines=LINES):
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(2)
                     try:
                         txt = line.decode("utf-8")
                         await Alty.send_message(ID, f"➕ {txt}")
@@ -58,7 +58,7 @@ async def main():
                     except Exception as e:
                         print(e)
 
-            await asyncio.sleep(3)  # * minutes = * seconds
+            await asyncio.sleep(3)
 
         except FloodWait as sec:
             await asyncio.sleep(sec.value)
@@ -84,9 +84,10 @@ def heroku_scale(scale: int):
 )
 async def off_on(_, message: Message):
     cmd = message.command[0]
+    msg = await message.reply("• Please Wait!")
     scale = 0 if cmd == "dyno_off" else 1
     check = heroku_scale(scale)
-    await message.reply(check)
+    await msg.edit(check)
 
 
 Alty.run(main())
