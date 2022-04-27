@@ -27,7 +27,7 @@
     },
     "HEROKU_API_KEY": {
       "description": "Your Heroku Acc #API-KEY"
-    }
+    }, 
     "PROCESS_TYPE": {
       "description": "Your Heroku App #PROCESS-TYPE"
     }
