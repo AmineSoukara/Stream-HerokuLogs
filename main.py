@@ -40,26 +40,28 @@ Alty = Client("Alty-Logs", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH
 async def main():
     async with Alty:
         try:
-            while True:
-                t = "💬 [INFO] Starting To Stream Logs.."
-                print(t)
-                await Alty.send_message(ID, t)
 
-            server = heroku3.from_key(HEROKU_API_KEY)
-            app = server.app(HEROKU_APP_NAME)
-            for line in app.stream_log(lines=LINES):
-                try:
-                    txt = line.decode("utf-8")
-                    await Alty.send_message(ID, f"➕ {txt}")
-                except FloodWait as sec:
-                    await asyncio.sleep(sec.x)
-                except Exception as e:
-                    print(e)
+            t = "💬 [INFO] Starting To Stream Logs.."
+            print(t)
+            await Alty.send_message(OWNER_ID, t)
+
+            while True:
+                server = heroku3.from_key(HEROKU_API_KEY)
+                app = server.app(HEROKU_APP_NAME)
+                for line in app.stream_log(lines=LINES):
+                    await asyncio.sleep(1)
+                    try:
+                        txt = line.decode("utf-8")
+                        await Alty.send_message(ID, f"➕ {txt}")
+                    except FloodWait as sec:
+                        await asyncio.sleep(sec.value)
+                    except Exception as e:
+                        print(e)
 
             await asyncio.sleep(3)  # * minutes = * seconds
 
         except FloodWait as sec:
-            await asyncio.sleep(sec.x)
+            await asyncio.sleep(sec.value)
         except Exception as e:
             print(e)
 
