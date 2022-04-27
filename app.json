@@ -13,6 +13,9 @@
     "API_HASH": {
       "description": "Your API_HASH from https://my.telegram.org/apps"
     },
+    "OWNER_ID": {
+      "description": "Owner ID"
+    },
     "ID": {
       "description": "Specific chat (Your ID or Channel ID"
     },
@@ -24,6 +27,9 @@
     },
     "HEROKU_API_KEY": {
       "description": "Your Heroku Acc #API-KEY"
+    }, 
+    "PROCESS_TYPE": {
+      "description": "Your Heroku App #PROCESS-TYPE"
     }
   }
 }
