@@ -9,8 +9,9 @@ from os.path import isfile
 import heroku3
 import urllib3
 from pyrogram import Client, filters
-from pyrogram.errors import FloodWait
+from pyrogram.errors import ChannelPrivate, FloodWait
 from pyrogram.types import Message
+from pyromod.helpers import ikb
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -43,7 +44,7 @@ async def main():
     async with Alty:
         try:
 
-            t = "💬 [INFO] Starting To Stream Logs.."
+            t = f"💬 [INFO] Starting To Stream Logs, APP: {HEROKU_APP_NAME}"
             print(t)
             await Alty.send_message(OWNER_ID, t)
 
@@ -74,19 +75,30 @@ async def main():
 
                             await Alty.send_message(ID, done)
 
+                        except ChannelPrivate:
+                            traceback.print_exc()
+                            await Alty.send_message(
+                                OWNER_ID,
+                                f"⚠️ Ayooo, The channel/Supergroup Is Not Accessible, ID: {ID}",
+                            )
+                            break
                         except FloodWait as sec:
                             await asyncio.sleep(sec.value)
-                        except Exception as e:
-                            print(e)
+                        except Exception:
+                            traceback.print_exc()
+                            err = "⚠️ Error: " + str(traceback.format_exc())
+                            await Alty.send_message(OWNER_ID, err)
+                            break
+
                         finally:
                             lines.clear()
 
-            await asyncio.sleep(3)
+            # await asyncio.sleep(3)
 
         except FloodWait as sec:
             await asyncio.sleep(sec.value)
-        except Exception as e:
-            print(e)
+        except Exception:
+            traceback.print_exc()
 
 
 def heroku_scale(scale: int):
@@ -100,6 +112,32 @@ def heroku_scale(scale: int):
     except BaseException:
         traceback.print_exc()
         return "⚠️ Error: " + str(traceback.format_exc())
+
+
+@Alty.on_message(filters.private & filters.command("start"))
+async def start_bot(_, message: Message):
+    pic = "https://i.imgur.com/965G4d5.png"
+    caption = (
+        "With This Code You Can Stream The Tail: In A Specific Chat (Private / Channel)"
+    )
+    buttons = ikb(
+        [
+            [
+                (
+                    "👨‍💻 Developer",
+                    "https://t.me/aminesoukara",
+                    "url",
+                ),
+                (
+                    "Source Code 🔗",
+                    "https://github.com/AmineSoukara/Stream-HerokuLogs",
+                    "url",
+                ),
+            ],
+        ]
+    )
+
+    await message.reply_photo(pic, caption=caption, reply_markup=buttons)
 
 
 @Alty.on_message(
