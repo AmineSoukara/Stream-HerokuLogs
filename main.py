@@ -38,7 +38,7 @@ ID = int(os.environ.get("ID", 12345))
 OWNER_ID = int(os.environ.get("OWNER_ID", 12345))
 
 # How Mush Lines Do U Want In One Message? :
-LINES = int(os.environ.get("LINES", 1))
+LINES = int(os.environ.get("LINES", 5))
 TIMEOUT = int(os.environ.get("TIMEOUT", 100))
 
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
