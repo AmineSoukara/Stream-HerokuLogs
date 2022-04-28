@@ -21,6 +21,7 @@ python3 main.py
 * `ID` Your ID Or Channel ID
 * `OWNER_ID` Owner Id
 * `LINES` Lines Per Message
+* `AS_DOC` Send Logs As Documents, Default 'False' (Messages)
 ###
 Go to https://dashboard.heroku.com/account, scroll down and press Reveal API
 * `HEROKU_APP_NAME` Heroku APP-NAME
