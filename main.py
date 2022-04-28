@@ -53,7 +53,7 @@ LINES = int(os.environ.get("LINES", 5))
 TIMEOUT = int(os.environ.get("TIMEOUT", 100))
 
 # Sending Logs As Documents
-AS_DOC = is_enabled((environ.get("AS_DOC", "False")), False)
+AS_DOC = is_enabled((os.environ.get("AS_DOC", "False")), False)
 
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
