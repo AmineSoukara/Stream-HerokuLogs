@@ -98,8 +98,8 @@ async def main():
 
                                 if isfile(path):
                                     os.remove(path)
-
-                            await Alty.send_message(ID, done)
+                            else:
+                                await Alty.send_message(ID, done)
 
                         except (
                             ChatAdminRequired,
