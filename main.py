@@ -152,7 +152,7 @@ def heroku_scale(scale: int):
 
 @Alty.on_message(filters.private & filters.command("start"))
 async def start_bot(_, message: Message):
-    pic = "https://i.imgur.com/965G4d5.png"
+    pic = "./logos/heroku_logo.png"
     caption = """
 With This Code You Can Stream The Tail: In A Specific Chat (Private / Channel)
 
