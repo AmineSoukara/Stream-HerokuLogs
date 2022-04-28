@@ -160,7 +160,7 @@ With This Code You Can Stream The Tail: In A Specific Chat (Private / Channel)
 
 /dyno_off : Turn Of App Dyno
 /dyno_on : Turn On App Dyno
-/dyno_restart : Restart App Dyno 
+/dyno_restart : Restart App Dyno
 """
     buttons = ikb(
         [
