@@ -20,7 +20,7 @@ python3 main.py
 * `BOT_TOKEN` Your bot token from @BotFather
 * `ID` Your ID Or Channel ID
 * `OWNER_ID` Owner Id
-
+* `LINES` Lines Per Message
 ###
 Go to https://dashboard.heroku.com/account, scroll down and press Reveal API
 * `HEROKU_APP_NAME` Heroku APP-NAME
