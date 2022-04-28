@@ -157,7 +157,10 @@ async def start_bot(_, message: Message):
 With This Code You Can Stream The Tail: In A Specific Chat (Private / Channel)
 
 • Available Commands:
-/dyno_off - /dyno_on - /dyno_restart
+
+/dyno_off : Turn Of App Dyno
+/dyno_on : Turn On App Dyno
+/dyno_restart : Restart App Dyno 
 """
     buttons = ikb(
         [
