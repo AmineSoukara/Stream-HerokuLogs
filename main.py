@@ -52,7 +52,7 @@ async def main():
     async with Alty:
         try:
 
-            t = f"💬 [INFO] Starting To Stream Logs\n\n•APP: #{HEROKU_APP_NAME.upper()}.\n•LINES: {LINES} Per Message"
+            t = f"💬 [INFO] Starting To Stream Logs\n\n•APP: {HEROKU_APP_NAME.upper()}\n•LINES: {LINES} Per Message"
             print(t)
             await Alty.send_message(OWNER_ID, t)
 
@@ -135,8 +135,12 @@ def heroku_scale(scale: int):
 @Alty.on_message(filters.private & filters.command("start"))
 async def start_bot(_, message: Message):
     pic = "https://i.imgur.com/965G4d5.png"
-    caption = (
-        "With This Code You Can Stream The Tail: In A Specific Chat (Private / Channel)"
+    caption = """
+With This Code You Can Stream The Tail: In A Specific Chat (Private / Channel)
+
+• Available Commands:
+/dyno_off - /dyno_on - /dyno_restart
+"""
     )
     buttons = ikb(
         [
