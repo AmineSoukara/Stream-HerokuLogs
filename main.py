@@ -5,14 +5,14 @@ import asyncio
 import os
 import traceback
 from os.path import isfile
-
+from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid
 import heroku3
 import urllib3
 from pyrogram import Client, filters
 from pyrogram.errors import ChannelPrivate, FloodWait
 from pyrogram.types import Message
 from pyromod.helpers import ikb
-
+from pyrogram.errors.exceptions.bad_request_400 import ChannelInvalid
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # get a token from @BotFather
@@ -44,7 +44,7 @@ async def main():
     async with Alty:
         try:
 
-            t = f"💬 [INFO] Starting To Stream Logs, APP: {HEROKU_APP_NAME}"
+            t = f"💬 [INFO] Starting To Stream Logs\n\nAPP: #{HEROKU_APP_NAME.upper()}"
             print(t)
             await Alty.send_message(OWNER_ID, t)
 
@@ -75,7 +75,7 @@ async def main():
 
                             await Alty.send_message(ID, done)
 
-                        except ChannelPrivate:
+                        except (ChannelInvalid, PeerIdInvalid, KeyError):
                             traceback.print_exc()
                             await Alty.send_message(
                                 OWNER_ID,
