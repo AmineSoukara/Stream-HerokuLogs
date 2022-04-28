@@ -3,9 +3,10 @@
 
 import asyncio
 import os
+import sys
 import traceback
 from os.path import isfile
-import sys
+
 import heroku3
 import urllib3
 from pyrogram import Client, filters
@@ -22,6 +23,16 @@ from pyrogram.types import Message
 from pyromod.helpers import ikb
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+def is_enabled(value, default):
+    if value.lower() in ["true", "yes", "1", "enable", "y"]:
+        return True
+    elif value.lower() in ["false", "no", "0", "disable", "n"]:
+        return False
+    else:
+        return default
+
 
 # get a token from @BotFather
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
@@ -79,7 +90,11 @@ async def main():
                                 path = f"logs_{HEROKU_APP_NAME}.txt"
                                 with open(path, "w") as f:
                                     f.write(done)
-                                await Alty.send_document(ID, document=path, thumb="./logos/heroku_logo_doc.png")
+                                await Alty.send_document(
+                                    ID,
+                                    document=path,
+                                    thumb="./logos/heroku_logo_doc.png",
+                                )
 
                                 if isfile(path):
                                     os.remove(path)
@@ -133,14 +148,6 @@ def heroku_scale(scale: int):
     except BaseException:
         traceback.print_exc()
         return "⚠️ Error: " + str(traceback.format_exc())
-
-def is_enabled(value, default):
-    if value.lower() in ["true", "yes", "1", "enable", "y"]:
-        return True
-    elif value.lower() in ["false", "no", "0", "disable", "n"]:
-        return False
-    else:
-        return default
 
 
 @Alty.on_message(filters.private & filters.command("start"))
