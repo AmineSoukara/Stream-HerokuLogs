@@ -5,14 +5,22 @@ import asyncio
 import os
 import traceback
 from os.path import isfile
-from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid
+import sys
 import heroku3
 import urllib3
 from pyrogram import Client, filters
-from pyrogram.errors import ChannelPrivate, FloodWait
+from pyrogram.errors import (
+    ChannelInvalid,
+    ChatAdminRequired,
+    FloodWait,
+    PeerIdInvalid,
+    UserIdInvalid,
+    UsernameInvalid,
+    UsernameNotOccupied,
+)
 from pyrogram.types import Message
 from pyromod.helpers import ikb
-from pyrogram.errors.exceptions.bad_request_400 import ChannelInvalid
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # get a token from @BotFather
@@ -75,11 +83,21 @@ async def main():
 
                             await Alty.send_message(ID, done)
 
-                        except (ChannelInvalid, PeerIdInvalid, KeyError):
+                        except (
+                            ChatAdminRequired,
+                            PeerIdInvalid,
+                            ChannelInvalid,
+                            UserIdInvalid,
+                            PeerIdInvalid,
+                            UsernameInvalid,
+                            UsernameNotOccupied,
+                            KeyError,
+                        ):
+
                             traceback.print_exc()
                             await Alty.send_message(
                                 OWNER_ID,
-                                f"⚠️ Ayooo, The channel/Supergroup Is Not Accessible, ID: {ID}",
+                                f"⚠️ Ayooo, The User/Channel/Supergroup Is Not Accessible, ID: {ID}",
                             )
                             break
                         except FloodWait as sec:
@@ -88,7 +106,7 @@ async def main():
                             traceback.print_exc()
                             err = "⚠️ Error: " + str(traceback.format_exc())
                             await Alty.send_message(OWNER_ID, err)
-                            break
+                            sys.exit()
 
                         finally:
                             lines.clear()
