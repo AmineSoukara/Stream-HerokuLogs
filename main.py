@@ -40,6 +40,7 @@ OWNER_ID = int(os.environ.get("OWNER_ID", 12345))
 # How Mush Lines Do U Want In One Message? :
 LINES = int(os.environ.get("LINES", 5))
 TIMEOUT = int(os.environ.get("TIMEOUT", 100))
+AS_DOC = is_enabled((environ.get("AS_DOC", "False")), False)
 
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
@@ -72,11 +73,11 @@ async def main():
 
                         try:
 
-                            if len(done) > 4096:
+                            if any([len(done) > 4096, AS_DOC]):
                                 path = f"logs_{HEROKU_APP_NAME}.txt"
                                 with open(path, "w") as f:
                                     f.write(done)
-                                await Alty.send_document(ID, path)
+                                await Alty.send_document(ID, document=path, thumb="./logos/heroku_logo_doc.png")
 
                                 if isfile(path):
                                     os.remove(path)
@@ -130,6 +131,14 @@ def heroku_scale(scale: int):
     except BaseException:
         traceback.print_exc()
         return "⚠️ Error: " + str(traceback.format_exc())
+
+def is_enabled(value, default):
+    if value.lower() in ["true", "yes", "1", "enable", "y"]:
+        return True
+    elif value.lower() in ["false", "no", "0", "disable", "n"]:
+        return False
+    else:
+        return default
 
 
 @Alty.on_message(filters.private & filters.command("start"))
