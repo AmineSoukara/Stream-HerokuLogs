@@ -40,6 +40,8 @@ OWNER_ID = int(os.environ.get("OWNER_ID", 12345))
 # How Mush Lines Do U Want In One Message? :
 LINES = int(os.environ.get("LINES", 5))
 TIMEOUT = int(os.environ.get("TIMEOUT", 100))
+
+# Sending Logs As Documents
 AS_DOC = is_enabled((environ.get("AS_DOC", "False")), False)
 
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
@@ -53,7 +55,7 @@ async def main():
     async with Alty:
         try:
 
-            t = f"💬 [INFO] Starting To Stream Logs\n\n•APP: {HEROKU_APP_NAME.upper()}\n•LINES: {LINES} Per Message"
+            t = f"💬 [INFO] Starting To Stream Logs\n\n•APP: {HEROKU_APP_NAME.upper()}\n•LINES: {LINES} Per {'Document' if AS_DOC else 'Message'}"
             print(t)
             await Alty.send_message(OWNER_ID, t)
 
