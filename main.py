@@ -52,7 +52,7 @@ async def main():
     async with Alty:
         try:
 
-            t = f"💬 [INFO] Starting To Stream Logs\n\nAPP: #{HEROKU_APP_NAME.upper()}"
+            t = f"💬 [INFO] Starting To Stream Logs\n\nAPP: #{HEROKU_APP_NAME.upper()}. {LINES} Lines Per Message"
             print(t)
             await Alty.send_message(OWNER_ID, t)
 
