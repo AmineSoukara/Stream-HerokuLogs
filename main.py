@@ -141,7 +141,6 @@ With This Code You Can Stream The Tail: In A Specific Chat (Private / Channel)
 • Available Commands:
 /dyno_off - /dyno_on - /dyno_restart
 """
-    )
     buttons = ikb(
         [
             [
