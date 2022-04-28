@@ -30,6 +30,9 @@
     }, 
     "PROCESS_TYPE": {
       "description": "Your Heroku App #PROCESS-TYPE"
+    }, 
+    "AS_DOC": {
+      "description": "Send Logs As Documents, Default 'False' (Messages)"
     }
   }
 }
