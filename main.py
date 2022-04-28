@@ -61,75 +61,6 @@ PROCESS_TYPE = os.environ.get("PROCESS_TYPE", "worker")
 
 Alty = Client("Alty-Logs", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
-def heroku_scale(scale: int):
-    try:
-        heroku_conn = heroku3.from_key(HEROKU_API_KEY)
-        app = heroku_conn.app(HEROKU_APP_NAME)
-        app.process_formation()[PROCESS_TYPE].scale(scale)
-        check = f"App: {HEROKU_APP_NAME} Has Been Scaled {'⚠️ DOWN' if scale == 0 else '✅️ UP'}."
-        print(check)
-        return check
-    except BaseException:
-        traceback.print_exc()
-        return "⚠️ Error: " + str(traceback.format_exc())
-
-
-@Alty.on_message(filters.private & filters.command("start"))
-async def start_bot(_, message: Message):
-    pic = "./logos/heroku_logo.png"
-    caption = """
-With This Code You Can Stream The Tail: In A Specific Chat (Private / Channel)
-
-• Available Commands:
-
-/dyno_off : Turn Of App Dyno
-/dyno_on : Turn On App Dyno
-/dyno_restart : Restart App Dyno 
-"""
-    buttons = ikb(
-        [
-            [
-                (
-                    "👨‍💻 Developer",
-                    "https://t.me/aminesoukara",
-                    "url",
-                ),
-                (
-                    "Source Code 🔗",
-                    "https://github.com/AmineSoukara/Stream-HerokuLogs",
-                    "url",
-                ),
-            ],
-        ]
-    )
-
-    await message.reply_photo(pic, caption=caption, reply_markup=buttons)
-
-
-@Alty.on_message(
-    filters.private & filters.command(["dyno_on", "dyno_off"]) & filters.user(OWNER_ID)
-)
-async def dyno_off_on(_, message: Message):
-    cmd = message.command[0]
-    msg = await message.reply("• Please Wait!")
-    scale = 0 if cmd == "dyno_off" else 1
-    check = heroku_scale(scale)
-    await msg.edit(check)
-
-
-@Alty.on_message(
-    filters.private & filters.command("dyno_restart") & filters.user(OWNER_ID)
-)
-async def dyno_restart(_, message: Message):
-    msg = await message.reply("• Please Wait!")
-    try:
-        heroku_x = heroku3.from_key(HEROKU_API_KEY)
-        ok = heroku_x.apps()[HEROKU_APP_NAME]
-        ok.restart()
-        await msg.edit(f"✅️ App: {HEROKU_APP_NAME} Restarted !")
-    except BaseException:
-        err = "⚠️ Error: " + str(traceback.format_exc())
-        await msg.edit(err)
 
 async def main():
     async with Alty:
@@ -205,6 +136,76 @@ async def main():
         except Exception:
             traceback.print_exc()
 
+
+def heroku_scale(scale: int):
+    try:
+        heroku_conn = heroku3.from_key(HEROKU_API_KEY)
+        app = heroku_conn.app(HEROKU_APP_NAME)
+        app.process_formation()[PROCESS_TYPE].scale(scale)
+        check = f"App: {HEROKU_APP_NAME} Has Been Scaled {'⚠️ DOWN' if scale == 0 else '✅️ UP'}."
+        print(check)
+        return check
+    except BaseException:
+        traceback.print_exc()
+        return "⚠️ Error: " + str(traceback.format_exc())
+
+
+@Alty.on_message(filters.private & filters.command("start"))
+async def start_bot(_, message: Message):
+    pic = "./logos/heroku_logo.png"
+    caption = """
+With This Code You Can Stream The Tail: In A Specific Chat (Private / Channel)
+
+• Available Commands:
+
+/dyno_off : Turn Of App Dyno
+/dyno_on : Turn On App Dyno
+/dyno_restart : Restart App Dyno 
+"""
+    buttons = ikb(
+        [
+            [
+                (
+                    "👨‍💻 Developer",
+                    "https://t.me/aminesoukara",
+                    "url",
+                ),
+                (
+                    "Source Code 🔗",
+                    "https://github.com/AmineSoukara/Stream-HerokuLogs",
+                    "url",
+                ),
+            ],
+        ]
+    )
+
+    await message.reply_photo(pic, caption=caption, reply_markup=buttons)
+
+
+@Alty.on_message(
+    filters.private & filters.command(["dyno_on", "dyno_off"]) & filters.user(OWNER_ID)
+)
+async def dyno_off_on(_, message: Message):
+    cmd = message.command[0]
+    msg = await message.reply("• Please Wait!")
+    scale = 0 if cmd == "dyno_off" else 1
+    check = heroku_scale(scale)
+    await msg.edit(check)
+
+
+@Alty.on_message(
+    filters.private & filters.command("dyno_restart") & filters.user(OWNER_ID)
+)
+async def dyno_restart(_, message: Message):
+    msg = await message.reply("• Please Wait!")
+    try:
+        heroku_x = heroku3.from_key(HEROKU_API_KEY)
+        ok = heroku_x.apps()[HEROKU_APP_NAME]
+        ok.restart()
+        await msg.edit(f"✅️ App: {HEROKU_APP_NAME} Restarted !")
+    except BaseException:
+        err = "⚠️ Error: " + str(traceback.format_exc())
+        await msg.edit(err)
 
 
 Alty.run(main())
